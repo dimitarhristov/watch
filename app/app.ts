@@ -7,5 +7,5 @@ app.get("/", function(req, res) {
 });
 
 app.listen(9999, function() {
-  console.log("listening on port 9999!");
+  console.log("listening on port 9999");
 });
