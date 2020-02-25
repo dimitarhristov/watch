@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-import dashboardRouter from "../router/dashboard";
+import dashboardRouter from "../../../router/dashboard";
 app.use("/dashboard", dashboardRouter);
 
 app.listen(port, function() {
