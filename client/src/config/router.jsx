@@ -2,13 +2,17 @@ import React from "react";
 
 import { Switch, Route } from "react-router";
 
-import { ProcList } from "../components/proc-list";
 import { NotFound } from "../components/not-found";
+import { Procsdef } from "../components/procsdef";
+import { AutorunTable } from "../components/autorun/table";
+import { AutorunDetails } from "../components/autorun/details";
 
 export default function Router() {
   return (
     <Switch>
-      <Route path="/aaa" component={ProcList} />
+      <Route path="/procsdef" component={Procsdef} />
+      <Route exact path="/autorun/:table/:id" component={AutorunDetails} />
+      <Route exact path="/autorun/:table" component={AutorunTable} />
       <Route component={NotFound} />
     </Switch>
   );

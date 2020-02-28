@@ -8,21 +8,19 @@ const proxy = require("proxy-middleware");
 
 module.exports = {
   // the output bundle won't be optimized for production but suitable for development
-  mode: "development",
+  mode: "production",
   // the app entry point is /src/index.js
   entry: path.resolve(__dirname, "src", "index.js"),
   output: {
     // the output of the webpack build will be in /dist directory
     path: path.resolve(__dirname, "dist"),
     // the filename of the JS bundle will be bundle.js
-    filename: "bundle.js",
-    publicPath: "/"
+    filename: "bundle.js"
   },
   watch: true,
   devServer: {
     contentBase: BUILD_DIR,
     port: 8888,
-    watchContentBase: true,
     historyApiFallback: true,
     progress: true,
     inline: true,
@@ -52,7 +50,8 @@ module.exports = {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         include: [path.resolve(__dirname, "./src")],
-        use: "awesome-typescript-loader"
+        use: "awesome-typescript-loader",
+        include: __dirname
       }
     ]
   },
@@ -66,7 +65,6 @@ module.exports = {
   // add a custom index.html as the template
   plugins: [
     new HtmlWebpackPlugin({
-      hash: true,
       template: path.resolve(__dirname, "src", "index.html")
     })
   ]
