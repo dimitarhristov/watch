@@ -3,7 +3,7 @@ import { ProcDefType } from "../server/db/definitions";
 import {
   isProcMonAlive,
   getProcMonItems
-} from "../client/src/components/procsdef/functions";
+} from "../client/src/components/procmon/functions";
 import { post, buildSlackMessage } from "./integrations/slack/index";
 
 // what to test?
@@ -18,7 +18,7 @@ import { post, buildSlackMessage } from "./integrations/slack/index";
 
 const IsProcMonRunning = function() {
   axios
-    .get("http://localhost:9999/dashboard/procsdef")
+    .get("http://localhost:9999/api/procmon")
     .then((response: any) => {
       const data: ProcDefType[] = response.data;
       const procmon = getProcMonItems(data);

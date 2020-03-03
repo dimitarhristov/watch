@@ -1,12 +1,15 @@
-How to start apps:
+## How to start apps:
 
 For bot:
+
 > node dist/bot/server.js
 
 For client:
+
 > npm run start
 
 For server:
+
 > npm run server-dev
 
 Summary :
@@ -30,17 +33,17 @@ $ $(npm bin)/tsc --init
 
 ...
 // "outFile": "./",
-"outDir": "./build" /* Redirect output structure to the directory */,
+"outDir": "./build" /_ Redirect output structure to the directory _/,
 // "rootDir": "./",
 ...
 
 ### Update package.json, add a dev, build and start script:
 
 "scripts": {
-  "build": "tsc",
-  "start": "NODE_ENV=production node ./build/index.js",
-  "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
-  ...
+"build": "tsc",
+"start": "NODE_ENV=production node ./build/index.js",
+"dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
+...
 },
 
 ### Step 2. Create sample Express App
@@ -51,17 +54,23 @@ $ npm i -D @types/express
 ### Test web server
 
 # Development Mode hot reload
-$ npm run dev
+
+\$ npm run dev
+
 # Build
-$ npm run build
+
+\$ npm run build
+
 # Prodution: Build + Start server
-$ npm start
+
+\$ npm start
 
 ### Step 3. Add TSLint
+
 TSLint checks TypeScript code for readability, maintainability, and functionality errors.
 Install the plugin: “TSLint” by Microsoft.
 
-$ npm i -D tslint
+\$ npm i -D tslint
 
 ### 4.2 Add Prettier
 
@@ -78,6 +87,7 @@ npm i cors --save
 npm i body-parser --save
 
 ### 4.5 Install Morgan
+
 Morgan is basically a logger, on any requests being made, it generates logs automatically.
 
 npm i morgan --save

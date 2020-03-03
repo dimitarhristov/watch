@@ -3,8 +3,6 @@ import * as R from "ramda";
 import { ProcDefType } from "../../../../server/db/definitions";
 import G from "../../config/globals";
 import { ProcdefCard } from "./card";
-import { isProcMonAlive, getProcMonItem } from "./functions";
-import { ProcmonError } from "./procmonerror";
 
 interface ProcsdefProps {
   serverId: string;
@@ -15,7 +13,7 @@ interface ProcsdefState {
   items: ProcDefType[];
 }
 
-export class Procsdef extends React.Component<ProcsdefProps, ProcsdefState> {
+export class Procmon extends React.Component<ProcsdefProps, ProcsdefState> {
   constructor(props: ProcsdefProps) {
     super(props);
     this.state = {
@@ -26,11 +24,10 @@ export class Procsdef extends React.Component<ProcsdefProps, ProcsdefState> {
   }
 
   componentDidMount() {
-    fetch("/dashboard/procsdef")
+    fetch("/api/procmon")
       .then(res => res.json())
       .then(
         result => {
-          console.log(result);
           this.setState({
             isLoaded: true,
             items: result
@@ -53,26 +50,15 @@ export class Procsdef extends React.Component<ProcsdefProps, ProcsdefState> {
   }
 
   cardsElements = (items: ProcDefType[]) => {
-    const ccc = R.groupBy(i => i.CSERVERID, items);
-    console.log(ccc);
     const servers = R.keys(R.groupBy(i => i.CSERVERID, items));
-    console.log(items);
-    console.log(servers);
     const cards = servers.map(serverId => {
       return (
         <div>
           <div>{serverId}</div>
           <div>
-            {isProcMonAlive(items, serverId.toString()) ? (
-              items.map(item => (
-                <ProcdefCard item={item} dateFormat={G.dateTimeFormat} />
-              ))
-            ) : (
-              <ProcmonError
-                item={getProcMonItem(items, serverId.toString())}
-                dateFormat={G.dateTimeFormat}
-              />
-            )}
+            {items.map(item => (
+              <ProcdefCard item={item} dateFormat={G.dateTimeFormat} />
+            ))}
           </div>
         </div>
       );

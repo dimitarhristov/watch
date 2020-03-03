@@ -5,7 +5,8 @@ import {
   EmaintAutoType,
   X3AsyncWebRequestType,
   X3PublishChannelEventsType,
-  ProcDefType
+  ProcDefType,
+  EmaintAutoLogType
 } from "./definitions";
 
 const dbfFile = DBFPATH("procstat.dbf");
@@ -24,6 +25,10 @@ export const ReadEmaintautoDbf = Read<EmaintAutoType>(
 export const ReadAutoschedDbf = Read<EmaintAutoType>(DBFPATH("autosched.dbf"));
 export const ReadAutoX4ReportsDbf = Read<EmaintAutoType>(
   DBFPATH("autox4reports.dbf")
+);
+
+export const ReadEmaintautoLogDbf = Read<EmaintAutoLogType>(
+  DBFPATH("emaintautolog.dbf")
 );
 
 export const AppendEmaintautoDbf = Append(DBFPATH("emaintauto.dbf"));

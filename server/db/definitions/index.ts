@@ -30,6 +30,7 @@ export interface EmaintAutoType {
   CINTERVAL: string;
   CCODE: string;
   CRUNID: string;
+  STATUS: string;
 }
 
 export interface EmaintAutoLogType {
@@ -40,7 +41,7 @@ export interface EmaintAutoLogType {
   CPROGRAM: string;
   NLINENO: boolean;
   NERRNO: number;
-  CERRORMSG: boolean;
+  CERRORMSG: string;
   CCODE: string;
   CDETAILS: string;
   CRUNID: string;
@@ -65,3 +66,19 @@ export interface X3PublishChannelEventsType {
   STATUS: string;
   LERROR: boolean;
 }
+
+export type AsyncStatus =
+  | "STARTED"
+  | "PENDING"
+  | "COMPLETED"
+  | "ERROR"
+  | "STALLED"
+  | "UNKNOWN";
+
+export type AutorunStatus =
+  | "RUNNING"
+  | "PENDING"
+  | "DONE"
+  | "ERROR"
+  | "STALLED"
+  | "UNKNOWN";

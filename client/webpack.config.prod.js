@@ -1,13 +1,26 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const fs = require("fs");
 const backend = "http://localhost:9999";
 const ROOT_DIR = process.cwd();
 const BUILD_DIR = path.resolve(ROOT_DIR, "dist");
 const proxy = require("proxy-middleware");
 
+const minimizePlugin = new UglifyJsPlugin({
+  parallel: true,
+  sourceMap: true,
+  cache: true,
+  test: /\.js(x?)$/,
+  uglifyOptions: {
+    output: {
+      // ecma: 5,
+      comments: false
+    }
+  }
+});
+
 module.exports = {
-  // the output bundle won't be optimized for production but suitable for development
   mode: "production",
   // the app entry point is /src/index.js
   entry: path.resolve(__dirname, "src", "index.js"),
@@ -15,17 +28,19 @@ module.exports = {
     // the output of the webpack build will be in /dist directory
     path: path.resolve(__dirname, "dist"),
     // the filename of the JS bundle will be bundle.js
-    filename: "bundle.js"
+    filename: "bundle.js",
+    publicPath: "/"
   },
   watch: true,
   devServer: {
     contentBase: BUILD_DIR,
     port: 8888,
+    watchContentBase: true,
     historyApiFallback: true,
-    progress: true,
+    progress: false,
     inline: true,
     before: app => {
-      app.use("/dashboard", proxy(backend + "/dashboard"));
+      app.use("/api", proxy(backend + "/api"));
 
       app.get("/*", (req, res, next) => {
         const wwwFile = path.join(ROOT_DIR, "dist", req.path);
@@ -50,21 +65,21 @@ module.exports = {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         include: [path.resolve(__dirname, "./src")],
-        use: "awesome-typescript-loader",
-        include: __dirname
+        use: "awesome-typescript-loader"
       }
     ]
   },
   resolve: {
     extensions: ["*", ".js", ".jsx", ".ts", ".tsx"]
   },
-  /*devServer: {
-    contentBase: path.resolve(__dirname, "build"),
-    historyApiFallback: true
-  },*/
+  optimization: {
+    minimize: true,
+    minimizer: [minimizePlugin]
+  },
   // add a custom index.html as the template
   plugins: [
     new HtmlWebpackPlugin({
+      hash: true,
       template: path.resolve(__dirname, "src", "index.html")
     })
   ]

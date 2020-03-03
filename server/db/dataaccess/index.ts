@@ -1,9 +1,14 @@
 import { DBFFile } from "dbffile";
+import { mapAccum } from "../../../client/node_modules/@types/ramda";
 
 export const Read = <T>(dbfFile: string) => async (
   startPos: number = 0,
   maxCount: number = 100
 ) => {
+  const dbf = await DBFFile.open(dbfFile);
+  if (startPos < 0) startPos = dbf.recordCount + startPos;
+  if (startPos < 0) startPos = 0;
+  if (maxCount === 0) maxCount = dbf.recordCount - startPos;
   const records = await (await DBFFile.open(dbfFile)).readRecords<T>(
     maxCount,
     startPos

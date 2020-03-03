@@ -25,7 +25,7 @@ module.exports = {
     progress: true,
     inline: true,
     before: app => {
-      app.use("/dashboard", proxy(backend + "/dashboard"));
+      app.use("/api", proxy(backend + "/api"));
 
       app.get("/*", (req, res, next) => {
         const wwwFile = path.join(ROOT_DIR, "dist", req.path);
